@@ -1,0 +1,61 @@
+{
+  "name": "@acedatacloud/n8n-nodes-seedream",
+  "version": "0.1.0",
+  "description": "Generate, edit and decompose Seedream images, create image sets, and track tasks in n8n through AceDataCloud.",
+  "license": "MIT",
+  "homepage": "https://github.com/AceDataCloud/SeedreamN8N",
+  "keywords": [
+    "n8n-community-node-package",
+    "acedatacloud",
+    "seedream",
+    "image-generation"
+  ],
+  "author": {
+    "name": "Ace Data Cloud",
+    "email": "dev@acedata.cloud",
+    "url": "https://platform.acedata.cloud"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AceDataCloud/SeedreamN8N.git"
+  },
+  "bugs": {
+    "url": "https://github.com/AceDataCloud/SeedreamN8N/issues"
+  },
+  "scripts": {
+    "build": "n8n-node build",
+    "dev": "n8n-node dev",
+    "lint": "n8n-node lint",
+    "lint:fix": "n8n-node lint --fix",
+    "test": "node --test",
+    "prepublishOnly": "npm run build && npm run lint && npm test"
+  },
+  "files": [
+    "dist/credentials",
+    "dist/nodes",
+    "examples"
+  ],
+  "n8n": {
+    "n8nNodesApiVersion": 1,
+    "strict": true,
+    "credentials": [
+      "dist/credentials/AceDataSeedreamApi.credentials.js"
+    ],
+    "nodes": [
+      "dist/nodes/Seedream/Seedream.node.js"
+    ]
+  },
+  "devDependencies": {
+    "@n8n/node-cli": "0.51.3",
+    "typescript": "5.9.3",
+    "prettier": "3.6.2",
+    "eslint": "9.29.0"
+  },
+  "peerDependencies": {
+    "n8n-workflow": "*"
+  },
+  "publishConfig": {
+    "access": "public",
+    "provenance": true
+  }
+}

@@ -1,0 +1,43 @@
+{
+  "id": "aceSeedreamSmokeTest",
+  "name": "Credential boundary smoke test",
+  "nodes": [
+    {
+      "id": "start",
+      "name": "Start",
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [0, 0],
+      "parameters": {}
+    },
+    {
+      "id": "query",
+      "name": "Get Task",
+      "type": "@acedatacloud/n8n-nodes-seedream.seedream",
+      "typeVersion": 1,
+      "position": [240, 0],
+      "parameters": {
+        "resource": "task",
+        "operation": "get",
+        "taskId": "credential-validation-only",
+        "simplify": true
+      }
+    }
+  ],
+  "connections": {
+    "Start": {
+      "main": [
+        [
+          {
+            "node": "Get Task",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1"
+  }
+}

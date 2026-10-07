@@ -296,11 +296,11 @@ export const properties: INodeProperties[] = [
         default: "opaque",
         options: [
           {
-            name: "opaque",
+            name: 'Opaque',
             value: "opaque",
           },
           {
-            name: "transparent",
+            name: 'Transparent',
             value: "transparent",
           },
         ],
@@ -338,11 +338,11 @@ export const properties: INodeProperties[] = [
         default: "standard",
         options: [
           {
-            name: "standard",
+            name: 'Standard',
             value: "standard",
           },
           {
-            name: "fast",
+            name: 'Fast',
             value: "fast",
           },
         ],

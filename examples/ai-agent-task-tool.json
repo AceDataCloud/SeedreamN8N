@@ -1,0 +1,110 @@
+{
+  "name": "Seedream task query as an AI Agent tool",
+  "nodes": [
+    {
+      "id": "start",
+      "name": "Start",
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [0, 0],
+      "parameters": {}
+    },
+    {
+      "id": "agent",
+      "name": "AI Agent",
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 3.1,
+      "position": [240, 0],
+      "parameters": {
+        "promptType": "define",
+        "text": "Use Get Task once to retrieve REPLACE_WITH_YOUR_TASK_ID. Summarize its state and any media URL.",
+        "options": {
+          "maxIterations": 2,
+          "forceToolCallOnFirstIteration": true,
+          "returnIntermediateSteps": true
+        }
+      }
+    },
+    {
+      "id": "model",
+      "name": "Chat Model",
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.3,
+      "position": [200, 220],
+      "parameters": {
+        "model": {
+          "mode": "id",
+          "value": "gpt-4o-mini"
+        },
+        "responsesApiEnabled": false,
+        "options": {
+          "maxTokens": 256
+        }
+      }
+    },
+    {
+      "id": "tool",
+      "name": "Get Task",
+      "type": "@acedatacloud/n8n-nodes-seedream.seedreamTool",
+      "typeVersion": 1,
+      "position": [460, 220],
+      "parameters": {
+        "resource": "task",
+        "operation": "get",
+        "taskId": "={{ $fromAI('taskId', 'Exact existing task ID', 'string') }}",
+        "simplify": true
+      }
+    },
+    {
+      "id": "notes",
+      "name": "Setup Notes",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [-20, -230],
+      "parameters": {
+        "content": "## Read-only task tool\nReplace the task ID in the Agent prompt, select your AceDataCloud credential on Get Task, and configure Chat Model credentials. Running this example uses your language-model account and retrieves an existing task. It does not generate new media.",
+        "width": 630,
+        "height": 190
+      }
+    }
+  ],
+  "connections": {
+    "Start": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get Task": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "pinData": {}
+}

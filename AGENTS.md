@@ -1,0 +1,3 @@
+# SeedreamN8N
+
+Independent n8n community node. Use `pnpm install --frozen-lockfile`, `pnpm run build`, `pnpm run lint`, and `pnpm test`. Build and lint with the official n8n node CLI; keep strict mode enabled. No runtime dependencies beyond n8n-workflow. Use authenticated n8n request helpers and never read files, environment variables, or secrets in node runtime code. Keep examples credential-free, generation asynchronous, task polling bounded, and creation requests without automatic retries. Model changes and capability substitutions must be explicit. Icons originate from the AceDataCloud Studio/service catalog; keep source provenance in assets/README.md. Deliver code through PRs under Ace Data Cloud Dev.

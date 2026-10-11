@@ -1,6 +1,6 @@
 # Seedream by AceDataCloud — n8n community node
 
-Seedream generation and task queries for n8n, using [AceDataCloud's API](https://platform.acedata.cloud/documents/seedream-images). Maintained by **Ace Data Cloud**; this is an AceDataCloud integration and does not claim to be an official node from the model developer.
+Seedream generation and task queries for n8n, using [AceDataCloud's API](https://platform.acedata.cloud/documents/seedream-images?utm_source=opensource&utm_medium=referral&utm_campaign=evergreen&utm_content=seedreamn8n_readme_documents_seedream_images). Maintained by **Ace Data Cloud**; this is an AceDataCloud integration and does not claim to be an official node from the model developer.
 
 Package: `@acedatacloud/n8n-nodes-seedream` · License: MIT.
 
@@ -12,11 +12,22 @@ n8n Cloud requires verified community nodes. npm publication does not establish 
 
 ## Credentials
 
-1. Get an AceDataCloud application API token from the [console](https://platform.acedata.cloud/console/applications).
-2. Create a **Seedream by AceDataCloud API** credential in n8n and paste the token.
-3. Run the credential test. It queries an empty batch of tasks and does not generate media.
+1. Open [Ace Data Cloud → Applications](https://platform.acedata.cloud/console/applications?utm_source=opensource&utm_medium=referral&utm_campaign=evergreen&utm_content=seedreamn8n_readme_api_key). Sign in, or register an account first.
+2. Find **General application**. If it has not been created, choose **Initialize General Application**. A general key can use the services available to your account; a dedicated application's key is limited to its service. Check the required service/model access and [current pricing](https://platform.acedata.cloud/models?utm_source=opensource&utm_medium=referral&utm_campaign=evergreen&utm_content=seedreamn8n_readme_pricing).
+3. Copy the **API Key** from the application card, or open **Keys / Manage Keys → Create** to create a separate key for this integration. Give it a recognizable name so you can revoke or rotate it independently.
+4. When creating a key, review **Expiration Time**, **Set Usage Limitation**, and **Allowed APIs**. Enable only the restrictions you need, allow the operations you will call, then click **Create** and copy the token from the key list. Task lookup does not grant permission to submit a generation. Confirm the application's balance can cover your first request; any trial allowance is whatever your account currently displays.
+5. Copy only the token value, without quotation marks, spaces, or `Bearer `. An API Key / API Token field expects this raw value; only a manually configured HTTP `Authorization` header needs the `Bearer ` prefix. A `platform-...` account-management token cannot replace a generation API key.
+
+![Copy an application API key or open Manage Keys](https://raw.githubusercontent.com/AceDataCloud/NanoBananaDify/2522b2f57210597af2db866445319334a1677a23/_assets/tutorial/get-api-key-en.png)
+
+![Create a separately named key with optional restrictions](https://raw.githubusercontent.com/AceDataCloud/NanoBananaDify/2522b2f57210597af2db866445319334a1677a23/_assets/tutorial/create-api-key-en.png)
+
+Save the key in the client's credential store or the environment variable shown below. Never put it in a prompt, shared workflow, screenshot, or Git commit. If authentication fails, check the full copied value, application/service access, expiration, usage limit, and balance before creating another key.
+
+In n8n, open a node and create a **Seedream by AceDataCloud API** credential. Paste the raw value into **API Token**, save, and select this credential on every node that needs it, including task readers.
 
 The token is masked, stored in n8n's credential store and sent as a Bearer token only to `https://api.acedata.cloud`. A direct model-provider subscription is not an AceDataCloud API token.
+
 
 ## Operations
 
@@ -50,7 +61,7 @@ Import the [AI Agent task tool](examples/ai-agent-task-tool.json) to query an ex
 
 ## Billing, retries and data
 
-Generation uses your AceDataCloud balance. Check the [service documentation](https://platform.acedata.cloud/documents/seedream-images) for current models, limits and pricing. The node preserves your model selection and never substitutes a model.
+Generation uses your AceDataCloud balance. Check the [service documentation](https://platform.acedata.cloud/documents/seedream-images?utm_source=opensource&utm_medium=referral&utm_campaign=evergreen&utm_content=seedreamn8n_readme_documents_seedream_images) for current models, limits and pricing. The node preserves your model selection and never substitutes a model.
 
 Creation requests are not automatically retried. Re-running a creation node or enabling retry-on-fail can create another paid task. After a timeout, retain the existing task ID and query its state where possible. Each incoming n8n item produces its own request, so multiple input items can incur multiple charges. Task queries do not generate another paid task.
 

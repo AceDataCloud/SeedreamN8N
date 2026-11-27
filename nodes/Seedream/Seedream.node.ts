@@ -24,7 +24,7 @@ export class Seedream implements INodeType {
     name: "seedream",
     icon: { light: "file:icon.png", dark: "file:icon.dark.png" },
     group: ["transform"],
-    version: 1,
+    version: [1, 1.1],
     subtitle: '={{$parameter["operation"] + ": " + $parameter["resource"]}}',
     description:
       "Generate, edit and decompose Seedream images, create image sets, and track tasks in n8n through AceDataCloud.",

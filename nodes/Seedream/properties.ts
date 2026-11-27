@@ -1,4 +1,30 @@
 import type { INodeProperties } from "n8n-workflow";
+const size: INodeProperties = {
+  displayName: "Size",
+  name: "size",
+  type: "string",
+  default: "2K",
+  description:
+    "Pro: 1K/1.5K/2K; Lite: 2K/3K/4K; 4.5: 2K/4K; 4.0: 1K/2K/4K. Exact WIDTHxHEIGHT is supported outside decomposition; decomposition also supports auto.",
+};
+
+const responseFormat: INodeProperties = {
+  displayName: "Response Format",
+  name: "responseFormat",
+  type: "options",
+  default: "url",
+  options: [
+    {
+      name: "Image URL",
+      value: "url",
+    },
+    {
+      name: "Base64 JSON",
+      value: "b64_json",
+    },
+  ],
+};
+
 export const properties: INodeProperties[] = [
   {
     displayName: "Resource",
@@ -202,17 +228,13 @@ export const properties: INodeProperties[] = [
       "One URL or image data URI per line. Pro editing: up to 10; other models: up to 14; decomposition: exactly one PNG/JPEG.",
   },
   {
-    displayName: "Size",
-    name: "size",
-    type: "string",
-    default: "2K",
+    ...size,
     displayOptions: {
       show: {
+        "@version": [1],
         resource: ["image"],
       },
     },
-    description:
-      "Pro: 1K/1.5K/2K; Lite: 2K/3K/4K; 4.5: 2K/4K; 4.0: 1K/2K/4K. Exact WIDTHxHEIGHT is supported outside decomposition; decomposition also supports auto.",
   },
   {
     displayName: "Generate Image Set",
@@ -257,25 +279,13 @@ export const properties: INodeProperties[] = [
     description: "Reference images plus maximum output images cannot exceed 15",
   },
   {
-    displayName: "Response Format",
-    name: "responseFormat",
-    type: "options",
-    default: "url",
+    ...responseFormat,
     displayOptions: {
       show: {
+        "@version": [1],
         resource: ["image"],
       },
     },
-    options: [
-      {
-        name: "Image URL",
-        value: "url",
-      },
-      {
-        name: "Base64 JSON",
-        value: "b64_json",
-      },
-    ],
   },
   {
     displayName: "Options",
@@ -348,6 +358,8 @@ export const properties: INodeProperties[] = [
         ],
         description: "Lite and 4.5 support standard only",
       },
+      { ...responseFormat, displayOptions: { show: { "@version": [1.1] } } },
+      { ...size, displayOptions: { show: { "@version": [1.1] } } },
       {
         displayName: "Watermark",
         name: "watermark",

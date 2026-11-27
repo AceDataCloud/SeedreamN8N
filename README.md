@@ -31,6 +31,8 @@ The token is masked, stored in n8n's credential store and sent as a Bearer token
 
 ## Operations
 
+In node version 1.1, choose **Options → Add Option** to set **Size** or **Response Format**. The defaults are 2K and URL output.
+
 | Resource | Operation        | Purpose                                      |
 | -------- | ---------------- | -------------------------------------------- |
 | Image    | Generate         | Single images or a related image set         |

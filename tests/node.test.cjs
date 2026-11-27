@@ -25,7 +25,7 @@ function context(parameters, responses = [], options = {}) {
     getNode: () => ({
       name: "Test",
       type: "@acedatacloud/n8n-nodes-seedream.seedream",
-      typeVersion: 1,
+      typeVersion: options.typeVersion ?? 1,
       parameters: {},
       position: [0, 0],
     }),
@@ -332,4 +332,48 @@ test("task completion preserves layer metadata and terminal errors", async () =>
     ),
   );
   assert.deepEqual(unchanged[0].json, raw);
+});
+
+test("v1.1 offers size and response format as Options with v1 request parity", async () => {
+  const { NodeHelpers } = require("n8n-workflow");
+  const description = node.description;
+  const { size, responseFormat, ...input } = create;
+  const selected = { size: "4K", responseFormat: "b64_json" };
+  for (const typeVersion of [1, 1.1]) {
+    const visible = description.properties.filter((prop) =>
+      NodeHelpers.displayParameter(input, prop, { typeVersion }, description),
+    );
+    const collection = visible.find((prop) => prop.name === "options");
+    const fields = collection.options.filter((prop) =>
+      NodeHelpers.displayParameter(
+        {},
+        prop,
+        { typeVersion },
+        description,
+        input,
+      ),
+    );
+    for (const key of ["size", "responseFormat"]) {
+      assert.equal(
+        visible.some((prop) => prop.name === key),
+        typeVersion === 1,
+      );
+      assert.equal(
+        fields.some((prop) => prop.name === key),
+        typeVersion === 1.1,
+      );
+    }
+  }
+  const response = [{ task_id: "task-1" }];
+  const old = context({ ...input, ...selected }, response);
+  const current = context({ ...input, options: selected }, response, {
+    typeVersion: 1.1,
+  });
+  const defaults = context(input, response, { typeVersion: 1.1 });
+  for (const ctx of [old, current, defaults]) await node.execute.call(ctx);
+  assert.deepEqual(current.calls, old.calls);
+  assert.equal(current.calls[0].body.size, selected.size);
+  assert.equal(current.calls[0].body.response_format, selected.responseFormat);
+  assert.equal(defaults.calls[0].body.size, size);
+  assert.equal(defaults.calls[0].body.response_format, responseFormat);
 });

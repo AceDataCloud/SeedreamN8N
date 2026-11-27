@@ -30,6 +30,7 @@ export function buildRequest(
   ]);
   const model = choice(get("model"), "Model", MODELS);
   const options = object(get("options", {}));
+  const usesOptions = context.getNode().typeVersion >= 1.1;
   const decomposition = operation === "decompose";
   if (decomposition && model !== PRO)
     throw new Error("Layer decomposition requires Seedream 5.0 Pro");
@@ -39,10 +40,13 @@ export function buildRequest(
   const body: IDataObject = {
     model,
     async: true,
-    response_format: choice(get("responseFormat", "url"), "Response format", [
-      "url",
-      "b64_json",
-    ]),
+    response_format: choice(
+      usesOptions
+        ? (options.responseFormat ?? "url")
+        : get("responseFormat", "url"),
+      "Response format",
+      ["url", "b64_json"],
+    ),
   };
   if (prompt) body.prompt = prompt;
   const images =
@@ -55,7 +59,10 @@ export function buildRequest(
           true,
         );
   if (images.length) body.image = images;
-  const size = requiredText(get("size", "2K"), "Size");
+  const size = requiredText(
+    usesOptions ? (options.size ?? "2K") : get("size", "2K"),
+    "Size",
+  );
   const presets = decomposition
     ? ["auto", "1K", "1.5K", "2K"]
     : model === PRO

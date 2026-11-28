@@ -20,7 +20,7 @@ import { properties } from "./properties";
 import { buildRequest } from "./request";
 export class Seedream implements INodeType {
   description: INodeTypeDescription = {
-    displayName: "Seedream by AceDataCloud",
+    displayName: "Seedream",
     name: "seedream",
     icon: { light: "file:icon.png", dark: "file:icon.dark.png" },
     group: ["transform"],
@@ -28,7 +28,7 @@ export class Seedream implements INodeType {
     subtitle: '={{$parameter["operation"] + ": " + $parameter["resource"]}}',
     description:
       "Generate, edit and decompose Seedream images, create image sets, and track tasks in n8n through AceDataCloud.",
-    defaults: { name: "Seedream by AceDataCloud" },
+    defaults: { name: "Seedream" },
     inputs: [NodeConnectionTypes.Main],
     outputs: [NodeConnectionTypes.Main],
     usableAsTool: true,

@@ -7,7 +7,7 @@ import type {
 
 export class AceDataSeedreamApi implements ICredentialType {
   name = "aceDataSeedreamApi";
-  displayName = "Seedream by AceDataCloud API";
+  displayName = "Seedream API";
   documentationUrl = "https://github.com/AceDataCloud/SeedreamN8N#credentials";
   icon = "file:../nodes/Seedream/icon.png" as const;
   properties: INodeProperties[] = [

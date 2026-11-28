@@ -1,4 +1,4 @@
-# Seedream by AceDataCloud — n8n community node
+# Seedream — n8n community node
 
 Seedream generation and task queries for n8n, using [AceDataCloud's API](https://platform.acedata.cloud/documents/seedream-images?utm_source=opensource&utm_medium=referral&utm_campaign=evergreen&utm_content=seedreamn8n_readme_documents_seedream_images). Maintained by **Ace Data Cloud**; this is an AceDataCloud integration and does not claim to be an official node from the model developer.
 
@@ -24,7 +24,7 @@ n8n Cloud requires verified community nodes. npm publication does not establish 
 
 Save the key in the client's credential store or the environment variable shown below. Never put it in a prompt, shared workflow, screenshot, or Git commit. If authentication fails, check the full copied value, application/service access, expiration, usage limit, and balance before creating another key.
 
-In n8n, open a node and create a **Seedream by AceDataCloud API** credential. Paste the raw value into **API Token**, save, and select this credential on every node that needs it, including task readers.
+In n8n, open a node and create a **Seedream API** credential. Paste the raw value into **API Token**, save, and select this credential on every node that needs it, including task readers.
 
 The token is masked, stored in n8n's credential store and sent as a Bearer token only to `https://api.acedata.cloud`. A direct model-provider subscription is not an AceDataCloud API token.
 
